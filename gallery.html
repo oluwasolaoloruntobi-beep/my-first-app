@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Gallery | Josemaria Engineering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="gallery-page">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <div class="nav-inner">
+        <div class="nav-links">
+          <details class="nav-menu">
+            <summary class="nav-menu-btn" aria-label="Open menu">Menu &#9776;</summary>
+            <div class="nav-menu-panel">
+              <a href="index.html">Home</a>
+              <a href="services.html">Services</a>
+              <a href="career.html">Career</a>
+              <a href="about.html">About Us</a>
+              <a href="index.html#contact-title">Contact</a>
+            </div>
+          </details>
+        </div>
+        <a class="nav-brand" href="index.html" aria-label="Josemaria Engineering Services Limited home">
+          <img class="nav-logo" src="logo.png" alt="Josemaria Engineering Services Limited logo" />
+          <span class="nav-company">Josemaria Engineering Services Limited</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="site-shell">
+      <section class="gallery-page-head" aria-labelledby="gallery-page-title">
+        <a class="back-link" href="index.html"><- Back to Home</a>
+        <h1 id="gallery-page-title">Project Gallery</h1>
+        <p>Browse all completed and ongoing project photos and videos.</p>
+      </section>
+
+      <section>
+        <div class="gallery-grid" id="gallery-grid"></div>
+        <p class="gallery-empty" id="gallery-empty" hidden>
+          No gallery media found. Add files to <code>gallery/pictures</code> or <code>gallery/videos</code>.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const grid = document.getElementById("gallery-grid");
+      const emptyState = document.getElementById("gallery-empty");
+
+      function sortGallery(images) {
+        return [...images].sort((a, b) => {
+          const aOrder = /project\.png/i.test(a) ? 0 : /galleryphoto1\./i.test(a) ? 1 : 2;
+          const bOrder = /project\.png/i.test(b) ? 0 : /galleryphoto1\./i.test(b) ? 1 : 2;
+          if (aOrder !== bOrder) {
+            return aOrder - bOrder;
+          }
+          return a.localeCompare(b);
+        });
+      }
+
+      function render(images, videos) {
+        if (!images.length && !videos.length) {
+          emptyState.hidden = false;
+          return;
+        }
+
+        emptyState.hidden = true;
+        const imageCards = images.map(
+          (img) => `
+            <article class="project-card project-card-plain">
+              <img class="project-thumb" src="${img}" alt="Project photo" loading="lazy" />
+            </article>
+          `
+        );
+
+        const videoCards = videos.map(
+          (video) => `
+            <article class="project-card project-card-plain">
+              <video class="project-thumb" src="${video}" controls preload="metadata"></video>
+            </article>
+          `
+        );
+
+        grid.innerHTML = [...imageCards, ...videoCards].join("");
+      }
+
+      fetch("/api/gallery")
+        .then((res) => res.json())
+        .then((data) => {
+          const images = Array.isArray(data.images) ? sortGallery(data.images) : [];
+          const videos = Array.isArray(data.videos) ? [...data.videos].sort((a, b) => a.localeCompare(b)) : [];
+          render(images, videos);
+        })
+        .catch(() => render([], []));
+    </script>
+  </body>
+</html>
