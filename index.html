@@ -260,6 +260,15 @@
       const appointmentSubmit = document.getElementById("appointment-submit");
       let quoteCaptchaPassed = false;
       let appointmentCaptchaPassed = false;
+      const fallbackImages = [
+        "gallery/pictures/project.png.jpg",
+        "gallery/pictures/header.png.jpg",
+        "gallery/pictures/aboutusheader.png",
+        "gallery/pictures/Galleryphoto1.jpg",
+        "gallery/pictures/Galleryphoto2.jpg",
+        "gallery/pictures/Galleryphoto3.jpg",
+        "gallery/pictures/Galleryphoto4.jpg"
+      ];
 
       function getCoverIndex(images) {
         const projectCoverIndex = images.findIndex((img) => /project\.png/i.test(img));
@@ -328,10 +337,10 @@
       fetch("/api/gallery")
         .then((res) => res.json())
         .then((data) => {
-          const images = Array.isArray(data.images) ? sortGallery(data.images) : [];
+          const images = Array.isArray(data.images) && data.images.length ? sortGallery(data.images) : fallbackImages;
           renderProjects(images);
         })
-        .catch(() => renderProjects([]));
+        .catch(() => renderProjects(fallbackImages));
     </script>
   </body>
 </html>

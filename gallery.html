@@ -52,6 +52,23 @@
     <script>
       const grid = document.getElementById("gallery-grid");
       const emptyState = document.getElementById("gallery-empty");
+      const fallbackImages = [
+        "gallery/pictures/project.png.jpg",
+        "gallery/pictures/header.png.jpg",
+        "gallery/pictures/aboutusheader.png",
+        "gallery/pictures/Gallery.jpg",
+        "gallery/pictures/Galleryphoto1.jpg",
+        "gallery/pictures/Galleryphoto2.jpg",
+        "gallery/pictures/Galleryphoto3.jpg",
+        "gallery/pictures/Galleryphoto4.jpg",
+        "gallery/pictures/image1.jpg",
+        "gallery/pictures/image2.jpg",
+        "gallery/pictures/image3.jpg",
+        "gallery/pictures/image4.jpg",
+        "gallery/pictures/image5.jpg",
+        "gallery/pictures/image6.jpg"
+      ];
+      const fallbackVideos = [];
 
       function sortGallery(images) {
         return [...images].sort((a, b) => {
@@ -93,11 +110,11 @@
       fetch("/api/gallery")
         .then((res) => res.json())
         .then((data) => {
-          const images = Array.isArray(data.images) ? sortGallery(data.images) : [];
-          const videos = Array.isArray(data.videos) ? [...data.videos].sort((a, b) => a.localeCompare(b)) : [];
+          const images = Array.isArray(data.images) && data.images.length ? sortGallery(data.images) : fallbackImages;
+          const videos = Array.isArray(data.videos) && data.videos.length ? [...data.videos].sort((a, b) => a.localeCompare(b)) : fallbackVideos;
           render(images, videos);
         })
-        .catch(() => render([], []));
+        .catch(() => render(fallbackImages, fallbackVideos));
     </script>
   </body>
 </html>
