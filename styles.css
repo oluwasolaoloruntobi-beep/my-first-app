@@ -744,13 +744,12 @@ h2 {
 }
 
 .email-link {
-  margin-left: 1rem;
   color: #111111;
   font-weight: 800;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.42rem;
 }
 
 .email-link:hover,
@@ -786,6 +785,12 @@ h2 {
 }
 
 .contact-options.straight-line {
+  flex-wrap: nowrap;
+}
+
+.contact-options-column {
+  flex-direction: column;
+  align-items: flex-start;
   flex-wrap: nowrap;
 }
 
