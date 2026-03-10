@@ -789,6 +789,20 @@ h2 {
   flex-wrap: nowrap;
 }
 
+.contact-address {
+  margin-top: 0.85rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-weight: 700;
+}
+
+.contact-address address {
+  margin: 0;
+  font-style: normal;
+  line-height: 1.6;
+}
+
 .whatsapp-float {
   position: fixed;
   right: 1rem;

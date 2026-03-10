@@ -6,7 +6,7 @@ const base = process.cwd();
 const galleryDir = path.join(base, 'gallery');
 const picturesDir = path.join(galleryDir, 'pictures');
 const videosDir = path.join(galleryDir, 'videos');
-const port = 8000;
+const port = Number.parseInt(process.argv[2], 10) || 8000;
 
 const mime = {
   '.html': 'text/html; charset=utf-8',
