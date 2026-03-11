@@ -21,6 +21,10 @@ body {
   background: #ffffff;
 }
 
+.legal-page {
+  background: linear-gradient(150deg, #ffffff, #fff3e6);
+}
+
 .site-nav {
   position: sticky;
   top: 0;
