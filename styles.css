@@ -14,6 +14,22 @@
   box-sizing: border-box;
 }
 
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(245, 124, 0, 0.65);
+  outline-offset: 2px;
+}
+
 body {
   margin: 0;
   font-family: "Manrope", sans-serif;
@@ -879,6 +895,17 @@ h2 {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr 1fr;
@@ -886,6 +913,18 @@ h2 {
 
   .gallery-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-company {
+    flex-wrap: wrap;
+  }
+
+  .hero-company-text {
+    min-width: 0;
+  }
+
+  .hero-company-sub {
+    flex-wrap: wrap;
   }
 }
 
@@ -915,16 +954,34 @@ h2 {
     width: min(1080px, calc(100% - 1.2rem));
   }
 
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .hero-company {
+    align-items: flex-start;
+  }
+
+  .hero-company-text {
+    min-width: 0;
+  }
+
+  .hero-company-sub {
+    flex-wrap: wrap;
+  }
+
   .whatsapp-hero {
     margin-left: 0;
   }
 
   .quote-hero {
     margin-left: 0;
+    display: block;
   }
 
   .appointment-hero {
     margin-left: 0;
+    display: block;
   }
 
   .about-hero {
@@ -945,5 +1002,17 @@ h2 {
 
   .footer-inner {
     width: min(1080px, calc(100% - 1.2rem));
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-options-column .contact-option-link,
+  .contact-options-column .email-link {
+    width: 100%;
+  }
+
+  .contact-address {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
